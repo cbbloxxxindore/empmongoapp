@@ -8,14 +8,14 @@ pipeline {
         stage('Build Maven'){
             steps
             {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cbbloxxxindore/employeerepo']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cbbloxxxindore/empmongoapp.git']]])
                 sh 'mvn clean install'
             }
         }
         stage('Build docker image'){
                     steps{
                         script{
-                            sh 'docker build -t abhijeetmishu/devops-integration .'
+                            sh 'docker build -t abhijeetmishu/employee_mongoapp .'
                         }
                     }
                 }
@@ -26,7 +26,7 @@ pipeline {
                                    sh 'docker login -u abhijeetmishu -p ${dockerhubpwd}'
 
                 }
-                                   sh 'docker push abhijeetmishu/devops-integration'
+                                   sh 'docker push abhijeetmishu/employee_mongoapp'
                                 }
                             }
                         }
